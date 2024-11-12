@@ -4,9 +4,10 @@
 import os
 import numpy as np
 from math import pi
+import torch
 
 
-def twomasks_parameters():
+def psf_pair_parameters():
 
     # path to current directory
     path_curr_dir = os.getcwd()
@@ -60,7 +61,7 @@ def twomasks_parameters():
     reg_err = 0.0  # in [um]
 
     # sensor matching dictionary
-    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'Tpx': Tpsf1to2_px, 'Tum': Tpsf1to2_um, 
+    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'T12_px': Tpsf1to2_px, 'T12_um': Tpsf1to2_um, 
                   'FOV_shift_range': FOV_shift_range, 'reg_err': reg_err}
 
     # ======================================================================================
@@ -250,16 +251,27 @@ def twomasks_parameters():
                        'checkpoint_path': checkpoint_path}
 
     # ======================================================================================
+    # device to use for training/validation (optimally should be a cuda device)
+    # ======================================================================================
+    
+    # device to train/evaluate on
+    device_id = 0
+    device = torch.device("cuda:" + str(device_id) if torch.cuda.is_available() else "cpu")
+    
+    # device dictionary
+    device_dict = {'device': device}
+
+    # ======================================================================================
     # final resulting dictionary including all parameters
     # ======================================================================================
 
     settings = {**mask_opts, **num_particles_dict, **nsig_dict, **blur_dict, **nonunif_bg_dict, **read_noise_dict,
                 **norm_dict, **optics_dict, **data_dims_dict, **training_dict, **learning_dict, **checkpoint_dict,
-                **tform_dict}
+                **tform_dict, **device_dict}
 
     return settings
 
 
 if __name__ == '__main__':
-    parameters = twomasks_parameters()
+    parameters = psf_pair_parameters()
 

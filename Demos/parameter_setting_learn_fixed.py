@@ -63,7 +63,7 @@ def psf_pair_parameters():
     reg_err = 0.0  # in [um] 0.05
 
     # sensor matching dictionary
-    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'Tpx': Tpsf1to2_px, 'Tum': Tpsf1to2_um, 
+    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'T12_px': Tpsf1to2_px, 'T12_um': Tpsf1to2_um, 
                   'FOV_shift_range': FOV_shift_range, 'reg_err': reg_err}
 
     # ======================================================================================

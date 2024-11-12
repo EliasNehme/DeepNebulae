@@ -5,6 +5,8 @@ import os
 import numpy as np
 from math import pi
 import scipy.io as sio
+import torch
+
 
 def psf_pair_parameters():
 
@@ -20,13 +22,9 @@ def psf_pair_parameters():
 
     # initial masks for learning optimized masks or final masks for training a localization model
     # if learn_mask=True the initial mask is initialized by default to be zero-modulation
-    path_mask1 = path_curr_dir + '/Mat_Files/biplane1_NA145.mat'
-    mask_dict1 = sio.loadmat(path_mask1)
-    mask_init1 = mask_dict1[list(mask_dict1.keys())[3]]
-    path_mask2 = path_curr_dir + '/Mat_Files/biplane2_NA145.mat'
-    mask_dict2 = sio.loadmat(path_mask2)
-    mask_init2 = mask_dict2[list(mask_dict2.keys())[3]]
-    mask_init = [mask_init1, mask_init2]
+    path_masks = path_curr_dir + '/Mat_Files/masks_biplane_sim.mat'
+    mask_dict = sio.loadmat(path_masks)
+    mask_init = [mask_dict['mask1'], mask_dict['mask2']]
 
     # mask options dictionary
     mask_opts = {'learn_mask': learn_mask, 'mask_init': mask_init}
@@ -66,7 +64,7 @@ def psf_pair_parameters():
     reg_err = 0.0  # in [um] 0.05
 
     # sensor matching dictionary
-    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'Tpx': Tpsf1to2_px, 'Tum': Tpsf1to2_um, 
+    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'T12_px': Tpsf1to2_px, 'T12_um': Tpsf1to2_um, 
                   'FOV_shift_range': FOV_shift_range, 'reg_err': reg_err}
 
     # ======================================================================================
@@ -257,12 +255,23 @@ def psf_pair_parameters():
                        'checkpoint_path': checkpoint_path}
 
     # ======================================================================================
+    # device to use for training/validation (optimally should be a cuda device)
+    # ======================================================================================
+    
+    # device to train/evaluate on
+    device_id = 0
+    device = torch.device("cuda:" + str(device_id) if torch.cuda.is_available() else "cpu")
+    
+    # device dictionary
+    device_dict = {'device': device}
+
+    # ======================================================================================
     # final resulting dictionary including all parameters
     # ======================================================================================
 
     settings = {**mask_opts, **num_particles_dict, **nsig_dict, **blur_dict, **nonunif_bg_dict, **read_noise_dict,
                 **norm_dict, **optics_dict, **data_dims_dict, **training_dict, **learning_dict, **checkpoint_dict,
-                **tform_dict}
+                **tform_dict, **device_dict}
 
     return settings
 

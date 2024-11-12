@@ -5,6 +5,7 @@ import os
 import numpy as np
 from math import pi
 import scipy.io as sio
+import torch
 
 
 def psf_pair_parameters():
@@ -21,13 +22,9 @@ def psf_pair_parameters():
 
     # initial masks for learning optimized masks or final masks for training a localization model
     # if learn_mask=True the initial mask is initialized by default to be zero-modulation
-    path_mask1 = path_curr_dir + '/Mat_Files/mask_pluto_1008.mat'
-    mask_dict1 = sio.loadmat(path_mask1)
-    mask_init1 = mask_dict1[list(mask_dict1.keys())[3]]
-    path_mask2 = path_curr_dir + '/Mat_Files/mask_mlo_1008.mat'
-    mask_dict2 = sio.loadmat(path_mask2)
-    mask_init2 = mask_dict2[list(mask_dict2.keys())[3]]
-    mask_init = [mask_init1, mask_init2]
+    path_masks = path_curr_dir + '/Mat_Files/masks_learned_tracking_vipr.mat'
+    mask_dict = sio.loadmat(path_masks)
+    mask_init = [mask_dict['mask1'], mask_dict['mask2']]
 
     # mask options dictionary
     mask_opts = {'learn_mask': learn_mask, 'mask_init': mask_init}
@@ -55,12 +52,12 @@ def psf_pair_parameters():
     
     # transforms from no mask to a mask in each camera and between cameras
     # a transform set to identity means no change in (homogeneous) coordinates
-    Tpsf1 = np.eye(3, 3)  # transform from no mask to mask 1 (for example shift in xy) 
-    Tpsf2 = np.eye(3, 3)  # transform from no mask to mask 2 (for example shift in xy)
-    path_transforms = path_curr_dir + '/Mat_Files/Transforms_live_1008.mat'
+    path_transforms = path_curr_dir + '/Mat_Files/masks_learned_tracking_transforms.mat'
     transform_dict = sio.loadmat(path_transforms)
-    Tpsf1to2_px = transform_dict['Tpluto2mlo_px']  # transform from mask 1 to mask 2 in px (origin = top left corner of FOV)
-    Tpsf1to2_um = transform_dict['Tpluto2mlo_um']  # transform from mask 1 to mask 2 in um (origin = center of FOV)
+    Tpsf1 = transform_dict['T1']  # transform from no mask to mask 1 (for example shift in xy) 
+    Tpsf2 = transform_dict['T2']  # transform from no mask to mask 2 (for example shift in xy)
+    Tpsf1to2_px = transform_dict['T12_px']  # transform from mask 1 to mask 2 in px (origin = top left corner of FOV)
+    Tpsf1to2_um = transform_dict['T12_um']  # transform from mask 1 to mask 2 in um (origin = center of FOV)
     
     # global shift to cover the affine range
     FOV_shift_range = [-7.5, 7.5]  # in [um]
@@ -69,7 +66,7 @@ def psf_pair_parameters():
     reg_err = 0.0  # in [um]
 
     # sensor matching dictionary
-    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'Tpx': Tpsf1to2_px, 'Tum': Tpsf1to2_um, 
+    tform_dict = {'T1': Tpsf1, 'T2': Tpsf2, 'T12_px': Tpsf1to2_px, 'T12_um': Tpsf1to2_um, 
                   'FOV_shift_range': FOV_shift_range, 'reg_err': reg_err}
 
     # ======================================================================================
@@ -206,7 +203,7 @@ def psf_pair_parameters():
     nvalid = 1000
 
     # path for saving training examples: images + locations for localization net or locations + photons for PSF learning
-    training_data_path = path_curr_dir + "/TrainingImages_live_warp_1408/"
+    training_data_path = path_curr_dir + "/TrainingImages_learned_tracking/"
 
     # boolean flag whether to visualize examples while created
     visualize = False
@@ -219,7 +216,7 @@ def psf_pair_parameters():
     # ======================================================================================
 
     # results folder to save the trained model
-    results_path = path_curr_dir + "/Demos/Results_live_warp_1408/"
+    results_path = path_curr_dir + "/Demos/Results_learned_tracking/"
 
     # maximal dilation flag when learning a localization CNN (set to None if learn_mask=True as we use a different CNN)
     dilation_flag = False  # if set to 1 then dmax=16 otherwise dmax=4
@@ -259,12 +256,23 @@ def psf_pair_parameters():
                        'checkpoint_path': checkpoint_path}
 
     # ======================================================================================
+    # device to use for training/validation (optimally should be a cuda device)
+    # ======================================================================================
+    
+    # device to train/evaluate on
+    device_id = 0
+    device = torch.device("cuda:" + str(device_id) if torch.cuda.is_available() else "cpu")
+    
+    # device dictionary
+    device_dict = {'device': device}
+
+    # ======================================================================================
     # final resulting dictionary including all parameters
     # ======================================================================================
 
     settings = {**mask_opts, **num_particles_dict, **nsig_dict, **blur_dict, **nonunif_bg_dict, **read_noise_dict,
                 **norm_dict, **optics_dict, **data_dims_dict, **training_dict, **learning_dict, **checkpoint_dict,
-                **tform_dict}
+                **tform_dict, **device_dict}
 
     return settings
 
