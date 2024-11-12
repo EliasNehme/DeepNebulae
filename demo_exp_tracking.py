@@ -1,7 +1,5 @@
 # ======================================================================================================================
-# Demo 2 demonstrates how to use a model trained on simulations to localize experimental data. Again, the experimental
-# frames are taken from our STORM experiment (Fig. 3 main text). Note that the frames saved in the folder
-# <Experimental_Data/Tetrapod_demo2/> are those after minimum subtraction.
+# TODO: documentation
 #
 # IMPORTANT: The order of the channels is reversed due to a previous bug in the training code
 # For a new tracking experiment, the concatenation order should be (im_psf1, im_psf2) in data_utils.py, line 372 inside class "ExpDataset"

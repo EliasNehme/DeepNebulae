@@ -1,7 +1,5 @@
 # ======================================================================================================================
-# Demo 2 demonstrates how to use a model trained on simulations to localize experimental data. Again, the experimental
-# frames are taken from our STORM experiment (Fig. 3 main text). Note that the frames saved in the folder
-# <Experimental_Data/Tetrapod_demo2/> are those after minimum subtraction.
+# TODO: documentation
 # ======================================================================================================================
 
 # import related script and packages to load the exp. image

@@ -1,7 +1,5 @@
 # ======================================================================================================================
-# Demo 4 demonstrates how to use DeepSTORM3D can be used to learn an optimal PSF for high density. The parameters
-# assumed for this demo match our telomere simulations (Fig. 4 main text).The script shows the phase mask and the
-# corresponding PSF being updated over iterations. The mask was initialized in this demo to zero-modulation.
+# TODO: documentation
 # ======================================================================================================================
 
 # import the data generation and optics learning net functions
