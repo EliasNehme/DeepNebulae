@@ -2,7 +2,7 @@
 # TODO: documentation
 #
 # IMPORTANT: The order of the channels is reversed due to a previous bug in the training code
-# For a new tracking experiment, the concatenation order should be (im_psf1, im_psf2) in data_utils.py, line 372 inside class "ExpDataset"
+# For a new tracking experiment, concat order should be (im_psf1, im_psf2) in data_utils.py->class "ExpDataset"->, line 372
 # ======================================================================================================================
 
 # import related script and packages to load the exp. image

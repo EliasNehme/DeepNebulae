@@ -11,21 +11,8 @@ from DeepNebulae.helper_utils import normalize_01
 
 
 # ======================================================================================================================
-# numpy array conversion to variable and numpy complex conversion to 2 channel torch tensor
+# numpy complex conversion to 2 channel torch tensor
 # ======================================================================================================================
-
-
-# function converts numpy array on CPU to torch Variable on GPU
-def to_var(x):
-    """
-    Input is a numpy array and output is a torch variable with the data tensor
-    on cuda.
-    """
-
-    if torch.cuda.is_available():
-        x = x.cuda()
-    return Variable(x)
-
 
 # function converts numpy array on CPU to torch Variable on GPU
 def complex_to_tensor(phases_np):
@@ -307,7 +294,7 @@ class PhasesOnlineDataset(Dataset):
 
 # Experimental images with normalization dataset
 # IMPORTANT!! The order of the channels is reversed due to a previous bug in the training code
-# TODO: Switch order to (im_psf1, im_psf2) for a new tracking experiement!
+# Order switched to (im_psf1, im_psf2) for a new tracking experiement!
 class ExpDataset(Dataset):
 
     # initialization of the dataset
@@ -323,10 +310,13 @@ class ExpDataset(Dataset):
         
         # affine transforms from no mask to a mask in each camera and between cameras
         # a transform set to identity means no change in (homogeneous) coordinates
-        self.tform_psf1 = AffineTransform(matrix=np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]))  # in [px]
-        self.tform_psf2 = AffineTransform(matrix=np.array([[1, 0, 2], [0, 1, 1], [0, 0, 1]]))  # in [px]
         # assumption is we estimated 1->2, and 2 have lower SNR
-        self.tform_psf1to2 = AffineTransform(matrix=setup_params['Tpx'])  # in [px]
+        self.tform_psf1 = AffineTransform(matrix=setup_params['T1'])  # in [px]
+        self.tform_psf2 = AffineTransform(matrix=setup_params['T2'])  # in [px]
+        self.tform_psf1to2 = AffineTransform(matrix=setup_params['T12_px'])  # in [px]
+        
+        # check if this is my tracking exp which had a bug in channel ordering
+        self.my_tracking = True if "my_tracking" in setup_params else False
 
     # total number of samples in the dataset
     def __len__(self):
@@ -367,8 +357,9 @@ class ExpDataset(Dataset):
         
         # concatenate results into a 2 channel tensor
         # IMPORTANT!! The order of the channels is reversed due to a previous bug in the training code
-        # TODO: Switch order to (im_psf1, im_psf2) for a new tracking experiement!
-        im_tensor = torch.from_numpy(np.concatenate((im_psf2, im_psf1), 0)).type(torch.FloatTensor)
+        # Order switched to (im_psf1, im_psf2) for a new tracking experiement!
+        im_2ch = np.concatenate((im_psf2, im_psf1) if self.my_tracking else (im_psf1, im_psf2), 0)
+        im_tensor = torch.from_numpy(im_2ch).type(torch.FloatTensor)
         return im_tensor
 
 

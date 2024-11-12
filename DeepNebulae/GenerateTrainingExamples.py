@@ -103,7 +103,7 @@ def gen_data(setup_params):
             im_psf1_np = np.squeeze(im_psf1.data.cpu().numpy())
             
             # warp image of PSF 1 to match image of PSF 2, assumption is we estimated 1->2, and 2 have lower SNR
-            tform_1to2 = AffineTransform(matrix=setup_params['Tpx'])
+            tform_1to2 = AffineTransform(matrix=setup_params['T12_px'])
             im_psf1_np = warp(im_psf1_np, tform_1to2.inverse, order=3, preserve_range=False)
             
             ##### PSF 2
@@ -114,7 +114,7 @@ def gen_data(setup_params):
             xyz_global_shift = global_shift_xyz(xyz_nomask, [shift_x, shift_y])
 
             # affine transform to get the xyz in PSF 2 up to the global shift
-            xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['Tum'])
+            xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['T12_um'])
 
             # eliminate the global shift to get the xyz in PSF 2
             xyz_psf2 = global_shift_xyz(xyz_psf2_global_shift, [-shift_x, -shift_y])
@@ -230,7 +230,7 @@ def gen_data(setup_params):
             im_psf1_np = np.squeeze(im_psf1.data.cpu().numpy())
             
             # warp image of PSF 1 to match image of PSF 2, assumption is we estimated 1->2, and 2 have lower SNR
-            tform_1to2 = AffineTransform(matrix=setup_params['Tpx'])
+            tform_1to2 = AffineTransform(matrix=setup_params['T12_px'])
             im_psf1_np = warp(im_psf1_np, tform_1to2.inverse, order=3, preserve_range=False)
             
             ##### PSF 2
@@ -241,7 +241,7 @@ def gen_data(setup_params):
             xyz_global_shift = global_shift_xyz(xyz_nomask, [shift_x, shift_y])
 
             # affine transform to get the xyz in PSF 2 up to the global shift
-            xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['Tum'])
+            xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['T12_um'])
 
             # eliminate the global shift to get the xyz in PSF 2
             xyz_psf2 = global_shift_xyz(xyz_psf2_global_shift, [-shift_x, -shift_y])
