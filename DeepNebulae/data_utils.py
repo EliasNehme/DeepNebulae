@@ -305,14 +305,13 @@ class PhasesOnlineDataset(Dataset):
         return phases_tensor, Nphotons, bool_grid
 
 
-
 # Experimental images with normalization dataset
 # IMPORTANT!! The order of the channels is reversed due to a previous bug in the training code
 # TODO: Switch order to (im_psf1, im_psf2) for a new tracking experiement!
 class ExpDataset(Dataset):
 
     # initialization of the dataset
-    def __init__(self, im_list_psf1, im_list_psf2, setup_params, scale_test=False, warp2to1=False):
+    def __init__(self, im_list_psf1, im_list_psf2, setup_params, scale_test=False):
         self.im_list_psf1 = im_list_psf1
         self.im_list_psf2 = im_list_psf2
         assert len(self.im_list_psf1) == len(self.im_list_psf2), "Each measurement should have 2 psfs!"
@@ -320,13 +319,14 @@ class ExpDataset(Dataset):
         if self.project_01 is False:
             self.global_factors = setup_params['global_factors']
         self.train_stats = setup_params['train_stats']
+        self.scale_test = scale_test
+        
+        # affine transforms from no mask to a mask in each camera and between cameras
+        # a transform set to identity means no change in (homogeneous) coordinates
         self.tform_psf1 = AffineTransform(matrix=np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]))  # in [px]
         self.tform_psf2 = AffineTransform(matrix=np.array([[1, 0, 2], [0, 1, 1], [0, 0, 1]]))  # in [px]
         # assumption is we estimated 1->2, and 2 have lower SNR
         self.tform_psf1to2 = AffineTransform(matrix=setup_params['Tpx'])  # in [px]
-        self.tform_psf2to1 = AffineTransform(matrix=np.linalg.inv(setup_params['Tpx']))  # in [px]
-        self.scale_test = scale_test
-        self.warp2to1 = warp2to1
 
     # total number of samples in the dataset
     def __len__(self):
@@ -358,11 +358,8 @@ class ExpDataset(Dataset):
         im_psf1 = warp(im_psf1, self.tform_psf1.inverse, order=3, preserve_range=False)
         im_psf2 = warp(im_psf2, self.tform_psf2.inverse, order=3, preserve_range=False)
 
-        # warp the images of psf 1 and 2 to the same coordinates
-        if self.warp2to1:
-            im_psf2 = warp(im_psf2, self.tform_psf2to1.inverse, order=3, preserve_range=False)
-        else:
-            im_psf1 = warp(im_psf1, self.tform_psf1to2.inverse, order=3, preserve_range=False)
+        # warp the images of psf 1 to match the coordinates of psf 2
+        im_psf1 = warp(im_psf1, self.tform_psf1to2.inverse, order=3, preserve_range=False)
 
         # turn images into torch tensor with 1 channel
         im_psf1 = np.expand_dims(im_psf1, 0)

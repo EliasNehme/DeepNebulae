@@ -29,17 +29,16 @@ path_exp_data6 = path_curr + f'/Experimental_Data/FixedCell{cell_num}/learn2/'
 postprocessing_params = {'thresh': 20, 'radius': 4, 'keep_singlez': True}
 
 # whether to scale the test images to match training statistics
-scale_test = False 
-warp2to1 = False
+scale_test = False  # True
 
 # Tetrapod + EDOF PSFs
-xyz_rec_oracle, conf_rec_oracle = test_model(path_results1, postprocessing_params, scale_test, warp2to1, path_exp_data1, path_exp_data2)
+xyz_rec_oracle, conf_rec_oracle = test_model(path_results1, postprocessing_params, scale_test, path_exp_data1, path_exp_data2)
 
 # CRLB-optimized PSFs
-xyz_rec_crlb, conf_rec_crlb = test_model(path_results2, postprocessing_params, scale_test, warp2to1, path_exp_data3, path_exp_data4)
+xyz_rec_crlb, conf_rec_crlb = test_model(path_results2, postprocessing_params, scale_test, path_exp_data3, path_exp_data4)
 
 # Learned PSFs
-xyz_rec_learn, conf_rec_learn = test_model(path_results3, postprocessing_params, scale_test, warp2to1, path_exp_data5, path_exp_data6)
+xyz_rec_learn, conf_rec_learn = test_model(path_results3, postprocessing_params, scale_test, path_exp_data5, path_exp_data6)
 
 # save the positions and confidence values
 rec_dict = {'xyz_oracle': xyz_rec_oracle, 'conf_oracle': conf_rec_oracle, 

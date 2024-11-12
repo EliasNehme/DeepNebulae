@@ -22,9 +22,11 @@ path_exp_data2 = path_curr + '/Data/Experimental_Data/LiveCell/psf2/'
 # postprocessing parameters
 postprocessing_params = {'thresh': 80, 'radius': 4, 'keep_singlez': True}
 
+# whether to scale the test images to match training statistics
+scale_test = False  # True
+
 # test the model on a sequence of experimental image pairs inside a live U2OS cell
-scale_test, warp2to1 = False, False
-xyz_rec, conf_rec, results_rec = test_model(path_results, postprocessing_params, scale_test, warp2to1, path_exp_data1, path_exp_data2)
+xyz_rec, conf_rec, results_rec = test_model(path_results, postprocessing_params, scale_test, path_exp_data1, path_exp_data2)
 t_rec = results_rec[:, 0]
 
 # plt both 3D recoveries over time

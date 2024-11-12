@@ -20,10 +20,10 @@ def psf_pair_parameters():
 
     # initial masks for learning optimized masks or final masks for training a localization model
     # if learn_mask=True the initial mask is initialized by default to be zero-modulation
-    path_mask1 = path_curr_dir + '/Mat_Files/mask1_5um_NA145.mat'
+    path_mask1 = path_curr_dir + '/Mat_Files/biplane1_NA145.mat'
     mask_dict1 = sio.loadmat(path_mask1)
     mask_init1 = mask_dict1[list(mask_dict1.keys())[3]]
-    path_mask2 = path_curr_dir + '/Mat_Files/mask2_5um_NA145.mat'
+    path_mask2 = path_curr_dir + '/Mat_Files/biplane2_NA145.mat'
     mask_dict2 = sio.loadmat(path_mask2)
     mask_init2 = mask_dict2[list(mask_dict2.keys())[3]]
     mask_init = [mask_init1, mask_init2]

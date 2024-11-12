@@ -18,20 +18,19 @@ path_results3 = path_curr + '/Demos/Results_two_masks_learned/'
 postprocessing_params = {'thresh': 80, 'radius': 4, 'keep_singlez': True}
 
 # whether to scale the test images to match training statistics
-scale_test = False 
-warp2to1 = False
+scale_test = False  # True
 
 # you can change this to randomize the sampled example
 seed = 11 # 11, 10, 30, 33, 60
 
 # Tetrapod + EDOF PSFs
-xyz_rec_oracle, conf_rec_oracle = test_model(path_results1, postprocessing_params, scale_test, warp2to1, None, None, seed)
+xyz_rec_oracle, conf_rec_oracle = test_model(path_results1, postprocessing_params, scale_test, None, None, seed)
 
 # CRLB-optimized PSFs
-xyz_rec_crlb, conf_rec_crlb = test_model(path_results2, postprocessing_params, scale_test, warp2to1, None, None, seed)
+xyz_rec_crlb, conf_rec_crlb = test_model(path_results2, postprocessing_params, scale_test, None, None, seed)
 
 # Learned PSFs
-xyz_rec_learn, conf_rec_learn = test_model(path_results3, postprocessing_params, scale_test, warp2to1, None, None, seed)
+xyz_rec_learn, conf_rec_learn = test_model(path_results3, postprocessing_params, scale_test, None, None, seed)
 
 # save the positions and confidence values
 rec_dict = {'xyz_oracle': xyz_rec_oracle, 'conf_oracle': conf_rec_oracle, 

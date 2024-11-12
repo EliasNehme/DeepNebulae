@@ -26,7 +26,7 @@ from DeepNebulae.assessment_utils import calc_jaccard_rmse
 from DeepNebulae.helper_utils import normalize_01, xyz_to_nm
 
 
-def test_model(path_results, postprocess_params, scale_test=False, warp2to1=False, exp_imgs_path1=None, exp_imgs_path2=None, seed=66):
+def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path1=None, exp_imgs_path2=None, seed=66):
 
     # close all existing plots
     plt.close("all")
@@ -387,7 +387,7 @@ def test_model(path_results, postprocess_params, scale_test=False, warp2to1=Fals
 
             # instantiate the data class and create a data loader for testing
             num_imgs = len(img_names_psf1)
-            exp_test_set = ExpDataset(img_names_psf1, img_names_psf2, setup_params, scale_test, warp2to1)
+            exp_test_set = ExpDataset(img_names_psf1, img_names_psf2, setup_params, scale_test)
             exp_generator = DataLoader(exp_test_set, batch_size=1, shuffle=False)
             
             # time the entire dataset analysis
@@ -473,13 +473,12 @@ def test_model(path_results, postprocess_params, scale_test=False, warp2to1=Fals
                 tall_end // 3600, np.floor((tall_end / 3600 - tall_end // 3600) * 60), tall_end % 60))
             print('=' * 50)
             
-            # write the results to a csv file named "localizations_data_time_<warp>.csv" under the exp img folder
+            # write the results to a csv file named "localizations_<date>_<time>.csv" under the exp img folder of psf 1
             row_list = results.tolist()
             curr_dt = datetime.now()
             curr_date = f'{curr_dt.day:02d}{curr_dt.month:02d}{curr_dt.year:04d}'
             curr_time = f'{curr_dt.hour:02d}{curr_dt.minute:02d}{curr_dt.second:02d}'
-            curr_warp = '2to1' if warp2to1 else '1to2'
-            loc_name = 'localizations' + '_' + curr_date + '_' + curr_time + '_' + curr_warp + '.csv'
+            loc_name = 'localizations' + '_' + curr_date + '_' + curr_time + '.csv'
             with open(exp_imgs_path1 + loc_name, 'w', newline='') as file:
                 writer = csv.writer(file)
                 writer.writerows(row_list)
@@ -501,9 +500,6 @@ if __name__ == '__main__':
     
     # previously trained model
     parser.add_argument('--scale_test', action='store_true', help='whether to normalize the test images to match stats in training')
-    
-    # flag to scale test images matching training statistics
-    parser.add_argument('--warp2to1', action='store_true', help='whether to warp PSF 2 to PSF 1 or vice versa')
 
     # path to the experimental images of PSF 1
     parser.add_argument('--exp_imgs_path1', default=None, help='path to the experimental test images of PSF 1')
@@ -519,4 +515,4 @@ if __name__ == '__main__':
 
     # run the data generation process
     xyz_rec, conf_rec = test_model(args.path_results, args.postprocessing_params, args.scale_test, 
-                                   args.warp2to1, args.exp_imgs_path1, args.exp_imgs_path2, args.seed)
+                                   args.exp_imgs_path1, args.exp_imgs_path2, args.seed)
