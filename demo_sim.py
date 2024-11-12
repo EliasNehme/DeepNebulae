@@ -10,9 +10,9 @@ from DeepNebulae.Testing_Localization_Model import test_model
 
 # pre-trained weights on simulations
 path_curr = os.getcwd()
-path_results1 = path_curr + '/Demos/Results_two_masks_oracle/'
-path_results2 = path_curr + '/Demos/Results_two_masks_crlb/'
-path_results3 = path_curr + '/Demos/Results_two_masks_learned/'
+path_results1 = path_curr + '/Demos/Results_oracle/'
+path_results2 = path_curr + '/Demos/Results_crlb/'
+path_results3 = path_curr + '/Demos/Results_learned_fixed/'
 
 # postprocessing parameters
 postprocessing_params = {'thresh': 80, 'radius': 4, 'keep_singlez': True}
@@ -43,7 +43,7 @@ plt.figure()
 ax = plt.axes(projection='3d')
 ax.scatter(xyz_rec_oracle[:, 0], xyz_rec_oracle[:, 1], xyz_rec_oracle[:, 2], c='b', marker='^', label='TP + EDOF', depthshade=False)
 ax.scatter(xyz_rec_crlb[:, 0], xyz_rec_crlb[:, 1], xyz_rec_crlb[:, 2], c='r', marker='P', label='CRLB', depthshade=False)
-ax.scatter(xyz_rec_learn[:, 0], xyz_rec_learn[:, 1], xyz_rec_learn[:, 2], c='g', marker='o', label='Learn', depthshade=False)
+ax.scatter(xyz_rec_learn[:, 0], xyz_rec_learn[:, 1], xyz_rec_learn[:, 2], c='g', marker='o', label='Learned', depthshade=False)
 ax.set_xlabel('X [um]')
 ax.set_ylabel('Y [um]')
 ax.set_zlabel('Z [um]')

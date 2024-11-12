@@ -13,11 +13,11 @@ from DeepNebulae.Testing_Localization_Model import test_model
 
 # pre-trained weights on simulations
 path_curr = os.getcwd()
-path_results = path_curr + '/Demos/Tracking/'
+path_results = path_curr + '/Demos/Results_learned_tracking/'
 
 # path to experimental images
-path_exp_data1 = path_curr + '/Data/Experimental_Data/LiveCell/psf1/'
-path_exp_data2 = path_curr + '/Data/Experimental_Data/LiveCell/psf2/'
+path_exp_data1 = path_curr + '/Experimental_Data/LiveCell/psf1/'
+path_exp_data2 = path_curr + '/Experimental_Data/LiveCell/psf2/'
 
 # postprocessing parameters
 postprocessing_params = {'thresh': 80, 'radius': 4, 'keep_singlez': True}

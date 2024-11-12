@@ -10,7 +10,7 @@ from DeepNebulae.Testing_Localization_Model import test_model
 
 # pre-trained weights on simulations
 path_curr = os.getcwd()
-path_results = path_curr + '/Demos/Results_biplane_4um/'
+path_results = path_curr + '/Demos/Results_biplane/'
 
 # postprocessing parameters
 postprocessing_params = {'thresh': 80, 'radius': 4, 'keep_singlez': True}

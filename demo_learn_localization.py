@@ -3,7 +3,7 @@
 # ======================================================================================================================
 
 # import the data generation and localization net learning functions
-from Demos.parameter_setting_biplane import psf_pair_parameters
+from Demos.parameter_setting_oracle import psf_pair_parameters
 from DeepNebulae.GenerateTrainingExamples import gen_data
 from DeepNebulae.Training_Localization_Model import learn_localization_cnn
 
