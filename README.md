@@ -3,7 +3,7 @@
 This code accompanies the paper: ["Learning optimal wavefront shaping for
 multi-channel imaging"](https://tomer.net.technion.ac.il/files/2021/07/PAMI_Camera_Ready_Final_Version.pdf) which was presented at the IEEE 13th International Conference on Computational Photography (ICCP 21), and selected for publication in a special issue of IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI).
 
-![](Figures/ICCP_v2.gif "This is an experimental measurement of diffusing beads with a PSF writing the word ICCP 2021.")
+![](Figures/ICCP.gif "This is an experimental measurement of diffusing beads with a PSF writing the word ICCP 2021.")
 
 # Contents
 
