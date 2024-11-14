@@ -28,12 +28,9 @@ This code implements two different applications of CNNs in dense 3D localization
 
 ![](Figures/Localization.gif "This movie shows the application of a trained localization CNN to two simulated frames with the learned PSF-pair.")
 
+2. Learning an optimized pair of PSFs for high-density localization via end-to-end optimization. The movie below shows the phase masks (left) and the corresponding PSFs (right) learned over training iterations. Note that the phase masks are initialized to zero modulation, meaning the standard microscope PSF
 
-2. Learning an optimized pair of PSFs for high density localization via end-to-end optimization.
-
-
-![](Figures/masklearninganimation.gif "This movie shows the phase masks (left) and the corresponding PSFs (right) being learned over training iterations. Note that the phase masks are initialized to zero modulation, meaning the standard microscope PSF.")
-
+https://github.com/user-attachments/assets/3ecf7e85-1733-4e54-9ea7-ffdad1431f43
 
 There's no need to download any dataset as the code itself generates the training and the test sets. Demo 1 illustrates how to train a localization model based on retreived phase masks and channel alignment, and demo 4 illustrates how the method can be used to learn optimzied phase masks. The remaining demos evaluate pre-trained models on both simulated and experimental data.
 
