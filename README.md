@@ -1,9 +1,9 @@
-# DeepSTORM3D
+# DeepNebulae
 
 This code accompanies the paper: ["Learning optimal wavefront shaping for
-multi-channel imaging"](https://tomer.net.technion.ac.il/files/2021/07/PAMI_Camera_Ready_Final_Version.pdf)
+multi-channel imaging"](https://tomer.net.technion.ac.il/files/2021/07/PAMI_Camera_Ready_Final_Version.pdf) which was presented at the IEEE 13th International Conference on Computational Photography (ICCP 21), and selected for publication in a special issue of IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI).
 
-![](Figures/ICCP_v2.gif "This is an experimental measurement of diffusing beads with a PSF writing the "word ICCP 2021".")
+![](Figures/ICCP_v2.gif "This is an experimental measurement of diffusing beads with a PSF writing the word ICCP 2021.")
 
 # Contents
 
@@ -11,6 +11,7 @@ multi-channel imaging"](https://tomer.net.technion.ac.il/files/2021/07/PAMI_Came
 - [Optical setup](#optical-setup)
 - [Video recording](#video-recording)
 - [Channel registration](#channel-registration)
+- [Proposed PSFs](#proposed-psfs)
 - [System requirements](#system-requirements)
 - [Installation instructions](#installation-instructions)
 - [Code structure](#code-structure)
@@ -25,13 +26,13 @@ multi-channel imaging"](https://tomer.net.technion.ac.il/files/2021/07/PAMI_Came
 This code implements two different applications of CNNs in dense 3D localization microscopy:
 1. Learning a 3D localization CNN for a given fixed pair of PSFs.
 
-![](Figures/locsoverlay.gif "This movie shows 70 representative experimental frames followed by an overlay of their re-generated images using the recovered 3D positions by the CNN (Fig. 3b main text). Note that the experimental frames are shown before and after the re-generated images for ease of visualization. Scale bar is 5 microns.")
+![](Figures/Localization.gif "This movie shows the application of a trained localization CNN to two simulated frames with the learned PSF-pair.")
 
 
 2. Learning an optimized pair of PSFs for high density localization via end-to-end optimization.
 
 
-![](Figures/masklearninganimation.gif "This movie shows the phase mask (left) and the corresponding PSF (right) being learned over training iterations. Note that the phase mask is initialized to zero modulation, meaning the standard microscope PSF. Scale bar is 2 microns.")
+![](Figures/masklearninganimation.gif "This movie shows the phase masks (left) and the corresponding PSFs (right) being learned over training iterations. Note that the phase masks are initialized to zero modulation, meaning the standard microscope PSF.")
 
 
 There's no need to download any dataset as the code itself generates the training and the test sets. Demo 1 illustrates how to train a localization model based on retreived phase masks and channel alignment, and demo 4 illustrates how the method can be used to learn optimzied phase masks. The remaining demos evaluate pre-trained models on both simulated and experimental data.
@@ -42,9 +43,9 @@ The optical setup assumed in this repository is a
 
 # Video recording
 
-[![DeepNebulae on YouTube](http://img.youtube.com/vi/SxISC2O4qRI/0.jpg)](http://www.youtube.com/watch?v=SxISC2O4qRI&t=8868s "ICCP Paper Talk")
+To get a better grasp of the system and methods proposed in our work click the image below to watch the 12 min talk presented at the IEEE 13th International Conference on Computational Photography (ICCP 21).
 
-Paper talk at ICCP 21
+[![DeepNebulae on YouTube](http://img.youtube.com/vi/SxISC2O4qRI/0.jpg)](http://www.youtube.com/watch?v=SxISC2O4qRI&t=8868s "ICCP Paper Talk")
 
 # System requirements
 * The software was tested on a *Linux* system with Ubuntu version 18.0, and a *Windows* system with Windows 10 Home.  

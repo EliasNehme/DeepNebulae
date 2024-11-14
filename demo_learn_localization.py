@@ -15,5 +15,3 @@ gen_data(setup_params)
 
 # learn a localization cnn
 learn_localization_cnn(setup_params)
-
-

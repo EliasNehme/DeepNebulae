@@ -40,4 +40,3 @@ ax3D.invert_yaxis()
 ax3D.set_title('3D Recovered pts over time')
 fig.colorbar(p3d, ax=ax3D)
 plt.show()
-
