@@ -1,8 +1,10 @@
 # ======================================================================================================================
-# TODO: documentation
+# Demo 2 demonstrates how to use a model trained on simulations to localize a simulated example with non-uniform
+# background and emitter size. The parameters assumed for this demo match our Telomere simulations (Fig. 8 main text).
+# This script also prints quantitative metrics and compare the result to the GT simulated positions.
 # ======================================================================================================================
 
-# import related script and packages to load the exp. image
+# import related script and packages
 import os
 import scipy.io as sio
 import matplotlib.pyplot as plt

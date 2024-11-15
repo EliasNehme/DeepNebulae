@@ -1,5 +1,7 @@
 # ======================================================================================================================
-# TODO: documentation
+# Demo 4 demonstrates how DeepNebulae can be used to learn an optimal PSF pair for high density (Fig. 7 main text). The 
+# parameters assumed for this demo match our telomere simulations.The script shows the phase masks and the corresponding 
+# PSFs being updated over iterations. The masks were initialized in this demo to zero-modulation.
 # ======================================================================================================================
 
 # import the data generation and optics learning net functions

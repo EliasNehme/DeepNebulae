@@ -1,8 +1,11 @@
 # ======================================================================================================================
-# TODO: documentation
+# Demo 6 demonstrates the usage of this code to generate a training set and learn a localization model for other PSFs
+# besides the one proposed in our paper. Specifically we illsutrate the utility of this code for localizing biplane 
+# PSFs, which are probably the most widely used PSF pair in microscopy, requiring only the introduction of a defocus 
+# between the imaging channels, without further optical elements.
 # ======================================================================================================================
 
-# import related script and packages to load the exp. image
+# import related script and packages
 import os
 import scipy.io as sio
 import matplotlib.pyplot as plt

@@ -1,8 +1,10 @@
 # ======================================================================================================================
-# TODO: documentation
+# Demo 5 demonstrates how to use a model trained on simulations to localize an experimental time lapse of telomeres 
+# diffusing within a U2OS cell nucleus. The PSFs in the experimental data are those of Method 3 (Fig. 7 main text). 
+# The resulting localizations are presented raw without further filtering/ track-linking as in Fig. 10 main text.
 #
 # IMPORTANT: The order of the channels is reversed due to a previous bug in the training code
-# For a new tracking experiment, concat order should be (im_psf1, im_psf2) in data_utils.py->class "ExpDataset"->, line 372
+# For a new tracking experiment, concat order should be (im_psf1, im_psf2) in data_utils.py->"ExpDataset"->, line 372
 # ======================================================================================================================
 
 # import related script and packages to load the exp. image

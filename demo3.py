@@ -1,5 +1,7 @@
 # ======================================================================================================================
-# TODO: documentation
+# Demo 3 demonstrates how to use a model trained on simulations to localize an experimental image of telomeres within a
+# U2OS cell nucleus. The PSFs in the experimental data cover all of the 3 proposed methods. For visual comparison the
+# script also regenerate the input image depending on the CNN localizations.
 # ======================================================================================================================
 
 # import related script and packages to load the exp. image
