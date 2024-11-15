@@ -8,7 +8,7 @@ import scipy.io as sio
 import torch
 
 
-def psf_pair_parameters():
+def setup_parameters():
 
     # path to current directory
     path_curr_dir = os.getcwd()
@@ -276,5 +276,5 @@ def psf_pair_parameters():
 
 
 if __name__ == '__main__':
-    parameters = psf_pair_parameters()
+    parameters = setup_parameters()
 

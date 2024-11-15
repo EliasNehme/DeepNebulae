@@ -7,7 +7,7 @@ from math import pi
 import scipy.io as sio
 
 
-def psf_pair_parameters():
+def setup_parameters():
 
     # path to current directory
     path_curr_dir = os.getcwd()
@@ -21,7 +21,7 @@ def psf_pair_parameters():
 
     # initial masks for learning optimized masks or final masks for training a localization model
     # if learn_mask=True the initial mask is initialized by default to be zero-modulation
-    path_masks = path_curr_dir + '/Mat_Files/masks_learned_vipr_2105.mat'
+    path_masks = path_curr_dir + '/Mat_Files/masks_learned_fixed_vipr.mat'
     mask_dict = sio.loadmat(path_masks)
     mask_init = [mask_dict['mask1'], mask_dict['mask2']]
 
@@ -264,5 +264,5 @@ def psf_pair_parameters():
 
 
 if __name__ == '__main__':
-    parameters = psf_pair_parameters()
+    parameters = setup_parameters()
 
