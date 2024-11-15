@@ -149,7 +149,7 @@ In `demo5.py` we demonstrate the raw localizations recovered by the network over
 frames, i.e. less than 0.3%. Nonetheless, if your data demonstrates a more complicated tracking scenario, we encourage you to link the CNN localizations by
 resorting to a more robust tracking software such as [TrackMate](https://imagej.net/plugins/trackmate/).
 
-
+https://github.com/user-attachments/assets/263a43e5-c2cb-43b0-bd14-27d76dfa4454
 
 # Citation
 
