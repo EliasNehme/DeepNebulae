@@ -42,7 +42,7 @@ def ShowMaskPSF(phasemask, vis_term, zvis, iternum=None):
                                               cw - delta_psf - 1:cw + delta_psf], sigma=(1, 1), mode='constant')
     
     # normalize sum to 10K counts
-    PSFs_final /= PSFs_final.sum(axis=(1,2))
+    PSFs_final /= PSFs_final.sum(axis=(1,2), keepdims=True)
     PSFs_final *= 10000
 
     # plot 5 PSFs along the axis
