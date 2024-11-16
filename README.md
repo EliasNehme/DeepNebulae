@@ -34,7 +34,7 @@ This code implements two different applications of CNNs in dense 3D localization
 
 https://github.com/user-attachments/assets/3ecf7e85-1733-4e54-9ea7-ffdad1431f43
 
-There's no need to download any dataset as the code itself generates the training and the test sets. Demo 1 illustrates how to train a localization model based on retreived phase masks and channel alignment, and demo 4 illustrates how the method can be used to learn optimzied phase masks. The remaining demos evaluate pre-trained models on both simulated and experimental data.
+There's no need to download any dataset as the code itself generates the training and the test sets. Demo 1 illustrates how to train a localization model based on retreived phase masks and channel alignment, and demo 4 illustrates how the method can be used to learn optimized phase masks. The remaining demos evaluate pre-trained models on both simulated and experimental data.
 
 # Optical setup
 
@@ -44,7 +44,7 @@ In our work we used the following bifurcated optical system. (a) A standard inve
 
 # Proposed PSFs
 
-Provided in this repository are three different propsoed PSF pairs, each derived through different considerations.
+Provided in this repository are three different proposed PSF pairs, each derived through different considerations.
 
 ![](Figures/ProposedPSFs.gif "This movie shows the three different propsoed PSF pairs in our work.")
 
@@ -102,7 +102,7 @@ This should take a couple of minutes.
  # Demo examples
  
 * There are 6 different demo scripts that demonstrate the use of this code:
-    1. `demo1.py` - learns a CNN for localizing high-density emitters using the PSFs of Method 1 (Tetrapod + newly designed EDOF) using telomere imaging conditions. The script simulates training examples before learning starts. It takes approximately 30 hours to train a model from scratch on a Titan Xp. Note that using the same script of demo1 with a different `parameter_setting_*.py` file, you can similarly learn a localization model for any other PSF pair.
+    1. `demo1.py` - learns a CNN for localizing high-density emitters using the PSFs of Method 1 (Tetrapod + newly designed EDOF) for telomere imaging conditions. The script simulates training examples before learning starts. It takes approximately 30 hours to train a model from scratch on a Titan Xp. Note that using the same script of demo1 with a different `parameter_setting_*.py` file, you can similarly learn a localization model for any other PSF pair.
     2. `demo2.py` - evaluates three pre-trained CNNs with the PSFs of Methods 1-3 for localizing high-density simulated data (Fig. 8 main text). The script plots the simulated inputs and the regenerated images, and also compares the recovery with the GT positons in 3D. This demo takes a few seconds to run on a Titan Xp.
     3. `demo3.py` - evaluates the same three pre-trained CNNs for localizing experimental snapshots of U2OS cell nuclei with fluorescently-tagged telomeres (Fig. 9 main text). The script plots the input images with the localizations overlaid as red crosses on top. The cell data can be switched from 'FixedCell1' to 'FixedCell2' in `Experimental_Data/FixedCell{*}`. The resulting localizations with each of the 3 methods are compared in 3D, and all results are saved in a mat file under the current working directory. This demo takes a few seconds to run on a Titan Xp.
     4. `demo4.py` - learns an optimized PSF pair from scratch. The learned phase masks and corresponding PSFs are plotted each 5 batches in the first 4 epochs, and afterwards only once each 50 batches. Learning takes approximately 30 hours to converge on a Titan Xp.
@@ -125,7 +125,7 @@ This should take a couple of minutes.
 
 # Learning a localization model
 
-To learn a localization model for your setup, you need to supply calibrated phase masks and channel registration transforms (e.g. using beads on the coverslip), and generate a new parameter settings script similar to the ones in the `Demos` folder. Below is typical experiment flow in our work, with the alst step of experimental GT derivation being optional, utilized only for quality control. See [next section](#channel-registration) for more details on the transform $\mathcal{T}$ that warps the image $\mathcal{I}_1$ to align it with the image $\mathcal{I}_2$.
+To learn a localization model for your setup, you need to supply calibrated phase masks and channel registration transforms (e.g. using beads on the coverslip), and generate a new parameter settings script similar to the ones in the `Demos` folder. Below is a typical experiment flow in our work, with the last step of experimental GT derivation being optional, utilized only for quality control. See [next section](#channel-registration) for more details on the transform $\mathcal{T}$ that warps the image $\mathcal{I}_1$ to align it with the image $\mathcal{I}_2$.
 
 ![](Figures/ExperimentFlow.png "Overview of a typical experiment.")
 
@@ -139,7 +139,7 @@ Note that for optimal performance, we warp the images of the two channels to the
 
 ![](Figures/Transforms.png "Illustration the coordinate systems assumed in our transforms.")
 
-In our experiments, we used calibration samples consisting of beads adhered to the surface with 1% Polyvinyl alcohol (PVA). The beads in each image were localized with ThunderSTORM, and a customized MATLAB routine was used to estimate the above metnioned channel transforms (not included in this code). This led to a calibration error on the order of $<50$ nm, where our pixel size after magnification was 110 nm. While we do not provide the calibration code in this repository, we believe that similar results can be achieved using standard python libraries (e.g. scikit-image), with a code similar to the one in [this tutorial](https://scikit-image.org/docs/stable/auto_examples/transform/plot_matching.html).
+In our experiments, we used calibration samples consisting of beads adhered to the surface with 1% Polyvinyl alcohol (PVA). The beads in each image were localized with ThunderSTORM, and a customized MATLAB routine was used to estimate the above mentioned channel transforms (not included in this code). This led to a calibration error approximately $<50$ nm, where our pixel size after magnification was 110 nm. While we do not provide the calibration code in this repository, we believe that similar results can be achieved using standard python libraries (e.g. scikit-image), such as the code in [this tutorial](https://scikit-image.org/docs/stable/auto_examples/transform/plot_matching.html).
 
 ![](Figures/ChannelRegistration.png "Illustration of T_um in our work, with the histogram of target registration errors fitted with a Gaussian on the right.")
 

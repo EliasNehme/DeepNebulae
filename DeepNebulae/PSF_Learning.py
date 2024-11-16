@@ -196,13 +196,11 @@ def learn_masks(setup_params):
                       num_epochs, batch_ind+1, steps_per_epoch, loss.item()))
                 
                 # plot masks each 500 iterations
-                """
                 if batch_ind % 50 == 0 or (epoch < 4 and batch_ind % 5 == 0):
                     plt.figure(1, figsize=(15, 5))
                     ShowMaskPSF(mask_param1, vis_term, zvis, epoch * steps_per_epoch + batch_ind)
                     plt.figure(2, figsize=(15, 5))
                     ShowMaskPSF(mask_param2, vis_term, zvis, epoch * steps_per_epoch + batch_ind)
-                """
 
         # calculate and print mean validation loss and jaccard
         mean_train_loss = train_loss/setup_params['ntrain_batches']
