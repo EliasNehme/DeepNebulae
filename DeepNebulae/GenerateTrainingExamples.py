@@ -326,7 +326,7 @@ def gen_data(setup_params):
     setup_params['partition'] = partition
 
     # update recovery pixel in xy to be x4 smaller if we are learning a localization net
-    if np.all(setup_params['learn_mask']) is False:
+    if not(np.all(setup_params['learn_mask'])):
         setup_params['pixel_size_rec'] = setup_params['pixel_size_FOV'] / 4  # in [um]
 
     # save setup parameters dictionary for training and testing
@@ -338,7 +338,7 @@ def gen_data(setup_params):
     print('Finished sampling examples!')
 
     # close figure if it was open for visualization
-    if (np.all(setup_params['learn_mask']) is False) and setup_params['visualize']:
+    if not(np.all(setup_params['learn_mask'])) and setup_params['visualize']:
         plt.close(fig1)
 
 
