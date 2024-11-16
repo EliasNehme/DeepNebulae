@@ -60,9 +60,9 @@ def gen_data(setup_params):
     setup_params['ntrain_batches'] = ntrain_batches
 
     # phase masks initialization and psf module for simulation
-    if np.all(setup_params['learn_mask']) is False:
+    if not(np.all(setup_params['learn_mask'])):
         mask_init = setup_params['mask_init']
-        if np.all(mask_init) is None:
+        if mask_init[0] is None and mask_init[1] is None:
             print('If the training mode is not set to learning at least one phase mask then you should supply two phase masks')
             return
         else:
