@@ -28,7 +28,7 @@ path_exp_data5 = path_curr + f'/Experimental_Data/FixedCell{cell_num}/learn1/'
 path_exp_data6 = path_curr + f'/Experimental_Data/FixedCell{cell_num}/learn2/'
 
 # postprocessing parameters
-postprocessing_params = {'thresh': 20, 'radius': 4, 'keep_singlez': True}
+postprocessing_params = {'thresh': 60, 'radius': 4, 'keep_singlez': True}
 
 # whether to scale the test images to match training statistics
 scale_test = False  # True
