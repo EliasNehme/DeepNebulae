@@ -110,7 +110,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
         im_psf1_np = np.squeeze(im_psf1.data.cpu().numpy())
         
         # warp image of PSF 1 to match image of PSF 2
-        tform_1to2 = AffineTransform(matrix=setup_params['Tpx'])  # assumption is we estimated 1->2, and 2 have lower SNR
+        tform_1to2 = AffineTransform(matrix=setup_params['T12_px'])  # assumption is we estimated 1->2, and 2 have lower SNR
         im_psf1_np = warp(im_psf1_np, tform_1to2.inverse, order=3, preserve_range=False)
         
         # transfer image of PSF 1 back to a tensor
@@ -126,7 +126,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
         xyz_global_shift = global_shift_xyz(xyz_nomask, [shift_x, shift_y])
 
         # affine transform to get the xyz in PSF 2 up to the global shift
-        xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['Tum'])
+        xyz_psf2_global_shift = affine_transform_xyz(xyz_global_shift, setup_params['T12_um'])
 
         # eliminate the global shift to get the xyz in PSF 2
         xyz_psf2 = global_shift_xyz(xyz_psf2_global_shift, [-shift_x, -shift_y])
@@ -223,7 +223,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
         im_psf2_rec = psf_module_vis(mask_param2, phases_emitter_rec2, nphotons_rec)
         
         # get some approximate recovered positions for PSF 1 by applying the inverse transform
-        xyz_rec1 = affine_transform_xyz(xyz_rec2, np.linalg.inv(setup_params['Tum']))
+        xyz_rec1 = affine_transform_xyz(xyz_rec2, np.linalg.inv(setup_params['T12_um']))
 
         # turn recovered positions into phases
         phases_np1 = EmittersToPhases(xyz_rec1, setup_params)
@@ -275,7 +275,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
                 exp_im_psf2 = exp_im_psf2*setup_params['train_stats'][1][1] + setup_params['train_stats'][0][1]
 
             # warp image of PSF 1 to match image of PSF 2, assumption is we estimated 1->2, and 2 have lower SNR
-            tform_1to2 = AffineTransform(matrix=setup_params['Tpx'])
+            tform_1to2 = AffineTransform(matrix=setup_params['T12_px'])
             exp_im_psf1 = warp(exp_im_psf1, tform_1to2.inverse, order=3, preserve_range=False)
             
             # turn image into torch tensor with 1 channel on GPU
@@ -353,7 +353,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
             exp_psf2_rec = psf_module_vis(mask_param2, phases_emitter_rec2, nphotons_rec)
             
             # get some approximate recovered positions for PSF 1 by applying the inverse transform
-            xyz_rec1 = affine_transform_xyz(xyz_rec2, np.linalg.inv(setup_params['Tum']))
+            xyz_rec1 = affine_transform_xyz(xyz_rec2, np.linalg.inv(setup_params['T12_um']))
 
             # turn recovered positions into phases
             phases_np1 = EmittersToPhases(xyz_rec1, setup_params)
