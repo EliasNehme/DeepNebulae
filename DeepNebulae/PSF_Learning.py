@@ -35,7 +35,7 @@ def learn_masks(setup_params):
     path_train = setup_params['training_data_path']
 
     # check whether this is the right training script and if non-learned masks are properly initialized
-    if np.all(setup_params['learn_mask']):
+    if not(np.all(setup_params['learn_mask'])):
         raise ValueError('Wrong training script! You should use the function learn_localization_cnn ' 
                          'in Training_Localization_Model.py instead')
     if (setup_params['learn_mask'][0] is False and setup_params['mask_init'][0] is None) or \
