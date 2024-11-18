@@ -74,6 +74,11 @@ def ShowLossJaccardAtEndOfEpoch(learning_results, epoch):
     steps_per_epoch = learning_results['steps_per_epoch']
     iter_axis = np.arange(steps_per_epoch, steps_per_epoch * (epoch + 1) + 1, steps_per_epoch)        
 
+    # convert results to scalars on CPU if saved on GPU
+    for key in list(learning_results.keys()):
+        if type(learning_results[key]) is list:
+            learning_results[key] = [(elemi.item() if is_tensor(elemi) else elemi) for elemi in learning_results[key]]
+    
     # plot result
     plt.clf()
     plt.subplot(4, 1, 1)
