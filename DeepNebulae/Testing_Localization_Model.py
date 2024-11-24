@@ -39,6 +39,11 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
     # run on GPU if available
     device = setup_params['device']
     torch.backends.cudnn.benchmark = True
+    
+    # ensure we do not assume a higher number of GPUs than available
+    if device.type=='cuda':
+        if device.index > torch.cuda.device_count()-1:
+            device = torch.device("cuda:0")
 
     # phase term for PSF visualization
     vis_term, zvis = setup_params['vis_term'], setup_params['zvis']
