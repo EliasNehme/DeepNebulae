@@ -122,6 +122,7 @@ This should take a couple of minutes.
 * The `Experimental_data` folder includes the following:
     * `FixedCell{*}` contains snapshots of two different U2OS cell nuclei with tagged telomeres imaged with each of the 3 methods (Fig. 9 main text).
     * `LiveCell` contains a time lapse of 500 frames of fluroescently tagged telomeres diffusing in a live U2OS cell nucleus imaged with the learned PSFs (Method 3).
+    * `ExampleBeadStacks` contains example calibration bead z-stacks used for phase retreival with VIPR. Each stack covers an axial range of 5.5 $\mu m$ with steps of 100 nms.
 
 # Learning a localization model
 
