@@ -72,7 +72,7 @@ def test_model(path_results, postprocess_params, scale_test=False, exp_imgs_path
     cnn.to(device)
 
     # load learned weights
-    cnn.load_state_dict(torch.load(path_results + 'weights_best_loss.pkl'))
+    cnn.load_state_dict(torch.load(path_results + 'weights_best_loss.pkl', map_location=device))
 
     # post-processing module on CPU/GPU
     thresh, radius, keep_singlez = postprocess_params['thresh'], postprocess_params['radius'], postprocess_params['keep_singlez']
